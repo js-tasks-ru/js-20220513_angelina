@@ -8,7 +8,7 @@ export const omit = (obj, ...fields) => {
   if (fields.length === 0) {
     return obj;
   }
-  let resultObj = {};
+  const resultObj = {};
   Object.entries(obj).forEach( item => {
     if (!fields.includes(item[0])) {
       resultObj[item[0]] = obj[item[0]];
