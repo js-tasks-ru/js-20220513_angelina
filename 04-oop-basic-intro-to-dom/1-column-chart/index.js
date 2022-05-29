@@ -1,5 +1,5 @@
 export default class ColumnChart {
-  chartHeight = 50;
+  static chartHeight = 50;
 
   constructor({data = [], value = 0, label = '', link = '', formatHeading = data => data} = {}) {
     this.data = data;
