@@ -1,5 +1,5 @@
 export default class ColumnChart {
-  static chartHeight = 50;
+  chartHeight = 50;
 
   constructor({data = [], value = 0, label = '', link = '', formatHeading = data => data} = {}) {
     this.data = data;
@@ -11,7 +11,7 @@ export default class ColumnChart {
 
   getTemplate() {
     return `
-     <div class="column-chart column-chart_loading" style="--chart-height: 50">
+     <div class="column-chart column-chart_loading" style="--chart-height: ${this.chartHeight}">
           <div class="column-chart__title">
               Total ${this.label}
               ${this.getLink()}
@@ -28,7 +28,7 @@ export default class ColumnChart {
 
   getColumnProps(data) {
     const maxValue = Math.max(...data);
-    const scale = 50 / maxValue
+    const scale = this.chartHeight / maxValue
 
     return data.map(item => {
       return {
