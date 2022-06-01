@@ -77,6 +77,10 @@ export default class SortableTable {
     }
   }
 
+  destroy() {
+    this.remove();
+  }
+
   sort(field, order) {
     const sortedData = this.sortData(field, order);
     const allColumns = this.element.querySelectorAll('.sortable-table__cell[data-id]');
