@@ -13,19 +13,29 @@ export default class SortableTable {
   }
 
   initEventListeners() {
-    const allSortableColumns = this.element.querySelectorAll(`.sortable-table__cell[data-sortable="true"]`);
-
-    allSortableColumns.forEach(column => {
-      column.addEventListener('click', () => {
-        let order = '';
-        if (column.dataset.order === '' || column.dataset.order === 'desc') {
-          order = 'asc';
-        } else if (column.dataset.order === 'asc') {
-          order = 'desc';
+    const header = this.subElements['header'];
+    header.addEventListener('click', (event) => {
+      if (event.target) {
+        let div = event.target.closest('div');
+        if (!div) { return; }
+        if (header.contains(div)) {
+          this.sort(div.dataset.id, div.dataset.order === 'asc' ? 'desc' : 'asc');
         }
-        this.sort(column.dataset.id, order);
-      });
+      }
     });
+
+    // this.subElements['header'].addEventListener('click', this.handler);
+  }
+
+  handler(event) {
+    if (event.target) {
+      let div = event.target.closest('div');
+      if (!div) { return; }
+      console.log(this);
+      if (this.subElements['header'].contains(div)) {
+        this.sort(div.dataset.id, div.dataset.order === 'asc' ? 'desc' : 'asc');
+      }
+    }
   }
 
   getTemplate() {
@@ -104,6 +114,7 @@ export default class SortableTable {
   destroy() {
     this.remove();
     // how remove event listeners!?
+    // this.subElements['header'].removeEventListener('click', this.handler);
   }
 
   sort(field, order) {
