@@ -101,6 +101,7 @@ describe('events-practice/sortable-table-v2', () => {
     const firstRow = body.firstElementChild;
     const lastRow = body.lastElementChild;
 
+    console.log(firstRow);
     expect(firstRow).toHaveTextContent('Powerbank аккумулятор Hiper SP20000');
     expect(lastRow).toHaveTextContent('Детский велосипед Lexus Trike Racer Trike');
   });
