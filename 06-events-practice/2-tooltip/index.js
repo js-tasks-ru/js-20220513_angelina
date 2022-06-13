@@ -26,29 +26,38 @@ class Tooltip {
   }
 
   initialize () {
-    document.addEventListener('mouseover', (event) => {
-      if (event.target) {
-        let div = event.target.closest('div');
-        if (!div) { return; }
-        this.render(event.target.dataset.tooltip);
-        this.element.style.left = event.x + 'px';
-        this.element.style.top = event.y + 'px';
-      }
-    });
+    this.initEventListeners();
+  }
 
-    document.addEventListener('mousemove', (event) => {
-      if (event.target) {
-        console.log(event.x, event.y);
-        this.element.style.left = event.x + 'px';
-        this.element.style.top = event.y + 'px';
-      }
-    });
+  initEventListeners() {
+    document.addEventListener('pointerover', this.onPointerOver);
+    document.addEventListener('pointerout', this.onPointerOut);
+  }
 
-    document.addEventListener('mouseout', (event) => {
-      if (event.target) {
-        this.remove();
+  onPointerOver = (event) => {
+    if (event.target) {
+      let element = event.target.closest('[data-tooltip]');
+
+      if (element) {
+        this.render(element.dataset.tooltip);
+        document.addEventListener('pointermove', this.onPointerMove);
       }
-    });
+    }
+  }
+
+  onPointerOut = (event) => {
+    if (event.target) {
+      this.remove();
+      document.removeEventListener('pointermove', this.onPointerMove);
+    }
+  }
+
+  onPointerMove = (event) => {
+    if (event.target) {
+      const offset = 10;
+      this.element.style.left = event.x + offset + 'px';
+      this.element.style.top = event.y + offset + 'px';
+    }
   }
 
   remove() {
@@ -57,6 +66,9 @@ class Tooltip {
 
   destroy() {
     this.remove();
+    document.removeEventListener('pointerover', this.onPointerMove);
+    document.removeEventListener('pointerout', this.onPointerOut);
+    document.removeEventListener('pointermove', this.onPointerMove);
   }
 }
 

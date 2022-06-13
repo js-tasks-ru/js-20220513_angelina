@@ -14,7 +14,7 @@ export default class SortableTable {
 
   initEventListeners() {
     const header = this.subElements['header'];
-    header.addEventListener('click', (event) => {
+    header.addEventListener('pointerdown', (event) => {
       if (event.target) {
         let div = event.target.closest('div');
         if (!div) { return; }
